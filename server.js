@@ -6,7 +6,7 @@ const env = require('dotenv').config();
 
 const app = express();
 
-const indexRouter = require('./routes/indexRouter');
+const indexRouter = require('./routes/index');
 
 // view setup
 app.use(expressLayouts);
