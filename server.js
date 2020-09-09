@@ -17,13 +17,16 @@ app.set('view engine', 'ejs');
 
 // database setup
 mongoose.connect(process.env.DATABASE_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
-    })
-    .then((result) => app.listen(process.env.PORT ||3000))
-    .catch((err) => console.log(err));
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+})
+const db = mongoose.connection
+db.on('error', error => console.error(error))
+db.once('open', () => console.log('Connected to Mongoose'))
 
 
 // routes
 app.use(indexRouter);
+
+app.listen(process.env.PORT || 3000)
