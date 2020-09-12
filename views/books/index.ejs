@@ -1,0 +1,14 @@
+<h2>Book Index</h2>
+
+<% books.forEach(book => {%>
+<ul>
+    <li><%= book.title %></li>
+    <% authors.forEach(author => {%>
+        <% if(author.id == book.author) {%> 
+            <li><%= author.name %></li>
+            <%}%>
+    <%})%>
+    <li><%= book.pageCount %></li>
+    <li><%= book.description %></li>
+</ul>
+<%}) %>

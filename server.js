@@ -10,8 +10,13 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+
+
+// Router
 const indexRouter = require('./routes/index');
 const authorRouter = require('./routes/authorRoutes');
+const bookRouter = require('./routes/bookRoutes');
+
 
 // view setup
 app.use(expressLayouts);
@@ -24,6 +29,8 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+
+
 // database setup
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -35,8 +42,10 @@ db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongoose'))
 
 
+
 // routes
 app.use(indexRouter);
 app.use('/author', authorRouter);
+app.use('/book', bookRouter);
 
 app.listen(process.env.PORT || 3000)
