@@ -16,6 +16,7 @@ const app = express();
 const indexRouter = require('./routes/index');
 const authorRouter = require('./routes/authorRoutes');
 const bookRouter = require('./routes/bookRoutes');
+const bookTestRouter = require('./routes/bookTestRoutes');
 
 
 // view setup
@@ -47,5 +48,6 @@ db.once('open', () => console.log('Connected to Mongoose'))
 app.use(indexRouter);
 app.use('/author', authorRouter);
 app.use('/book', bookRouter);
+app.use(bookTestRouter);
 
 app.listen(process.env.PORT || 3000)
