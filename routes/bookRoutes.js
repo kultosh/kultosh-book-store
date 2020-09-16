@@ -5,6 +5,7 @@ const router = express.Router();
 const Book = require('../models/book');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 const uploadPath = path.join('public', Book.coverImageBasePath);
 const imageMimeTypes = ['image/jpeg', 'image/png', 'image/jpg', 'images/gif'];
 const upload = multer({

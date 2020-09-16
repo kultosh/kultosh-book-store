@@ -1,5 +1,8 @@
 const Book = require('../models/book');
 const Author = require('../models/author');
+const path = require('path');
+const fs = require('fs');
+const uploadPath = path.join('public', Book.coverImageBasePath);
 
 const index = async (req, res) => {
     try {
@@ -19,20 +22,24 @@ const create = async (req, res) => {
 }
 
 const store = async (req, res) => {
+    const fileName = req.file != null ? req.file.filename : null;
+    const book = new Book({
+        title: req.body.title,
+        author: req.body.author,
+        publishDate: new Date(req.body.publishDate),
+        pageCount: req.body.pageCount,
+        coverImage: fileName,
+        description: req.body.description
+    });
     try {
-        const fileName = req.file != null ? req.file.filename : null;
-        const book = new Book({
-            title: req.body.title,
-            author: req.body.author,
-            publishDate: new Date(req.body.publishDate),
-            pageCount: req.body.pageCount,
-            coverImage: fileName,
-            description: req.body.description
-        });
         const newBook = await book.save();
         res.redirect('/book');
     } catch (error) {
-        res.send(error);
+        if(book.coverImage != null)
+        {
+            removeBookCover(book.coverImage)
+        }
+        renderNewPage(res, book, true)
     }
 };
 
@@ -48,6 +55,14 @@ async function renderNewPage(res, book, hasError = false) {
     } catch (error) {
         res.redirect('/books');
     }
+}
+
+function removeBookCover(filename)
+{
+    fs.unlink(path.join(uploadPath, filename), err => {
+        if(err) 
+        console.error(err)
+    });
 }
 
 module.exports = {
