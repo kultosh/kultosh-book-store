@@ -1,1 +1,5 @@
-<h2>Kultosh Book Store</h2>
+<% books.forEach(book => {%>
+<div>
+    <img src="<%= book.coverImagePath %>" alt="test" height="100" width="100">
+</div>
+<%})%>
